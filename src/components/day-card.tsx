@@ -43,7 +43,6 @@ export function DayCard({ date, entries, onAdd, onUpdate, onDelete, onRefresh }:
   const dayNum = format(date, "d");
   const monthName = format(date, "MMM");
 
-  const existingDelights = entries.map((e) => e.delight);
 
   const handleAdd = async () => {
     if (!newDelight) return;
@@ -249,7 +248,6 @@ export function DayCard({ date, entries, onAdd, onUpdate, onDelete, onRefresh }:
                 {!newDelight ? (
                   <DelightSelector
                     onSelect={setNewDelight}
-                    excludeDelights={existingDelights}
                   />
                 ) : (
                   <div className="space-y-2">
