@@ -3,8 +3,8 @@ import "./globals.css";
 import { AuthProvider } from "@/components/auth-provider";
 
 export const metadata: Metadata = {
-  title: "Nine Delights",
-  description: "Track your daily implementation of the nine delights",
+  title: "nine delights",
+  description: "angelina&apos;s daily implementation of the nine delights",
 };
 
 export default function RootLayout({

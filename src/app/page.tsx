@@ -7,13 +7,13 @@ import { MonthView } from "@/components/month-view";
 import { CalendarDots, SquaresFour } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils";
 
-type ViewMode = "week" | "month";
+type ViewMode = "days" | "month";
 
 export default function Home() {
-  const [view, setView] = useState<ViewMode>("week");
+  const [view, setView] = useState<ViewMode>("days");
 
   const handleDateSelect = () => {
-    setView("week");
+    setView("days");
   };
 
   return (
@@ -24,16 +24,16 @@ export default function Home() {
         <div className="mb-4 flex items-center justify-end">
           <div className="flex items-center rounded-lg border border-border bg-card p-0.5">
             <button
-              onClick={() => setView("week")}
+              onClick={() => setView("days")}
               className={cn(
                 "flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-all duration-200 ease",
-                view === "week"
+                view === "days"
                   ? "bg-foreground text-primary-foreground shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
               )}
             >
-              <CalendarDots size={14} weight={view === "week" ? "fill" : "regular"} />
-              Week
+              <CalendarDots size={14} weight={view === "days" ? "fill" : "regular"} />
+              Days
             </button>
             <button
               onClick={() => setView("month")}
@@ -50,7 +50,7 @@ export default function Home() {
           </div>
         </div>
 
-        {view === "week" ? (
+        {view === "days" ? (
           <WeekView />
         ) : (
           <MonthView onDateSelect={handleDateSelect} />

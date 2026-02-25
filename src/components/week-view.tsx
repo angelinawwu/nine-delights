@@ -1,37 +1,52 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { format, addDays, isToday } from "date-fns";
+import { useEffect, useRef, useCallback, useMemo } from "react";
+import { format, subDays } from "date-fns";
 import { motion } from "framer-motion";
-import { CaretLeft, CaretRight, CalendarBlank } from "@phosphor-icons/react";
 import { DelightEntry, DelightType } from "@/lib/types";
-import { useWeekNavigation, useDelights } from "@/lib/hooks";
+import { useDelights } from "@/lib/hooks";
 import { DayCard } from "./day-card";
 
-export function WeekView() {
-  const {
-    weekStart,
-    startStr,
-    endStr,
-    goToNextWeek,
-    goToPrevWeek,
-    goToToday,
-  } = useWeekNavigation();
+const DAY_COUNT = 14;
 
+export function WeekView() {
   const { entries, loading, fetchEntries, addDelight, updateDelight, deleteDelight } = useDelights();
 
   const scrollRef = useRef<HTMLDivElement>(null);
+  const didScroll = useRef(false);
+
+  const today = useMemo(() => new Date(), []);
+
+  const days = useMemo(
+    () =>
+      Array.from({ length: DAY_COUNT }, (_, i) =>
+        subDays(today, DAY_COUNT - 1 - i)
+      ),
+    [today]
+  );
+
+  const startStr = format(days[0], "yyyy-MM-dd");
+  const endStr = format(today, "yyyy-MM-dd");
 
   useEffect(() => {
     fetchEntries(startStr, endStr);
   }, [startStr, endStr, fetchEntries]);
 
-  const days = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
+  // Auto-scroll to the right (today) on mount / after loading
+  useEffect(() => {
+    if (!loading && scrollRef.current && !didScroll.current) {
+      scrollRef.current.scrollLeft = scrollRef.current.scrollWidth;
+      didScroll.current = true;
+    }
+  }, [loading]);
 
-  const getEntriesForDate = (date: Date): DelightEntry[] => {
-    const dateStr = format(date, "yyyy-MM-dd");
-    return entries.filter((e) => e.date === dateStr);
-  };
+  const getEntriesForDate = useCallback(
+    (date: Date): DelightEntry[] => {
+      const dateStr = format(date, "yyyy-MM-dd");
+      return entries.filter((e) => e.date === dateStr);
+    },
+    [entries]
+  );
 
   const handleRefresh = () => fetchEntries(startStr, endStr);
 
@@ -45,69 +60,32 @@ export function WeekView() {
     return addDelight(entry);
   };
 
-  const weekLabel = `${format(weekStart, "MMM d")} – ${format(addDays(weekStart, 6), "MMM d, yyyy")}`;
-
-  const hasToday = days.some((d) => isToday(d));
-
   return (
     <div className="flex h-full flex-col">
-      {/* Navigation */}
-      <div className="mb-4 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <button
-            onClick={goToPrevWeek}
-            className="rounded-lg p-1.5 text-muted-foreground transition-colors duration-200 ease hover:text-foreground"
-          >
-            <CaretLeft size={18} weight="bold" />
-          </button>
-          <h2
-            className="text-lg font-medium tracking-tight"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            {weekLabel}
-          </h2>
-          <button
-            onClick={goToNextWeek}
-            className="rounded-lg p-1.5 text-muted-foreground transition-colors duration-200 ease hover:text-foreground"
-          >
-            <CaretRight size={18} weight="bold" />
-          </button>
-        </div>
-
-        {!hasToday && (
-          <button
-            onClick={goToToday}
-            className="flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors duration-200 ease hover:border-foreground/20 hover:text-foreground"
-          >
-            <CalendarBlank size={14} />
-            Today
-          </button>
-        )}
-      </div>
-
-      {/* Week grid — 7 cols on desktop, 2 cols on mobile, horizontally scrollable */}
+      {/* Horizontal scroll day strip */}
       <div
         ref={scrollRef}
-        className="grid flex-1 gap-3 overflow-x-auto pb-2 grid-cols-2 sm:grid-cols-[repeat(7,minmax(180px,1fr))]"
+        className="scrollbar-hide flex flex-1 gap-3 overflow-x-auto pb-2 snap-x snap-mandatory scroll-smooth"
       >
         {loading ? (
-          Array.from({ length: 7 }).map((_, i) => (
+          Array.from({ length: DAY_COUNT }).map((_, i) => (
             <div
               key={i}
-              className="h-[420px] animate-pulse rounded-2xl border border-border bg-secondary/30"
+              className="h-[420px] w-[280px] shrink-0 animate-pulse rounded-2xl border border-border bg-secondary/30 snap-center sm:w-[220px]"
             />
           ))
         ) : (
           days.map((day, i) => (
             <motion.div
               key={format(day, "yyyy-MM-dd")}
+              className="w-[280px] shrink-0 snap-center sm:w-[220px]"
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
                 type: "spring",
                 stiffness: 400,
                 damping: 30,
-                delay: i * 0.04,
+                delay: i * 0.03,
               }}
             >
               <DayCard

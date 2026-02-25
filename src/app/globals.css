@@ -8,6 +8,13 @@
   .text-balance {
     text-wrap: balance;
   }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @layer base {
@@ -39,7 +46,7 @@
     --delight-transcendence: 258 68% 76%;
     --delight-goofing: 43 96% 56%;
     --delight-amelioration: 213 94% 68%;
-    --delight-coitus: 330 86% 70%;
+    --delight-decadence: 330 86% 70%;
     --delight-enthrallment: 160 64% 55%;
     --delight-wildcard: 231 73% 73%;
 
