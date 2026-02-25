@@ -229,7 +229,7 @@ export function DayCard({ date, entries, onAdd, onUpdate, onDelete, onRefresh }:
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                className="space-y-2 overflow-hidden"
+                className="space-y-2"
               >
                 {!newDelight ? (
                   <DelightSelector
