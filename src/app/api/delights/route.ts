@@ -39,10 +39,10 @@ export async function GET(request: NextRequest) {
 
     const entries = await getEntries(start, end);
     return NextResponse.json(entries);
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error fetching delights:", error);
     return NextResponse.json(
-      { error: "Failed to fetch delights", detail: error?.message || String(error) },
+      { error: "Failed to fetch delights", detail: error instanceof Error ? error.message : String(error) },
       { status: 500 }
     );
   }

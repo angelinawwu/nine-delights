@@ -7,7 +7,7 @@ export const DELIGHTS: { type: DelightType; label: string; cssVar: string; color
   { type: "transcendence", label: "Transcendence", cssVar: "--delight-transcendence", color: "#A78BFA" },
   { type: "goofing", label: "Goofing", cssVar: "--delight-goofing", color: "#FBBF24" },
   { type: "amelioration", label: "Amelioration", cssVar: "--delight-amelioration", color: "#60A5FA" },
-  { type: "coitus", label: "Coitus", cssVar: "--delight-coitus", color: "#F472B6" },
+  { type: "decadence", label: "Decadence", cssVar: "--delight-decadence", color: "#F472B6" },
   { type: "enthrallment", label: "Enthrallment", cssVar: "--delight-enthrallment", color: "#34D399" },
   { type: "wildcard", label: "Wildcard", cssVar: "--delight-wildcard", color: "#818CF8" },
 ];

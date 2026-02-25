@@ -1,6 +1,6 @@
 # Nine Delights
 
-Track your daily implementation of the nine delights: Walking Around, Fellowship, Deliciousness, Transcendence, Goofing, Amelioration, Coitus, Enthrallment, and Wildcard.
+Track your daily implementation of the nine delights: Walking Around, Fellowship, Deliciousness, Transcendence, Goofing, Amelioration, Decadence, Enthrallment, and Wildcard.
 
 ## Setup
 

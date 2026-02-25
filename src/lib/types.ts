@@ -5,7 +5,7 @@ export type DelightType =
   | "transcendence"
   | "goofing"
   | "amelioration"
-  | "coitus"
+  | "decadence"
   | "enthrallment"
   | "wildcard";
 
