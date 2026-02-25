@@ -4,12 +4,14 @@ import { useState } from "react";
 import { format, isToday, isFuture } from "date-fns";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Trash, PencilSimple, Check, X } from "@phosphor-icons/react";
+import Image from "next/image";
 import { DelightEntry, DelightType } from "@/lib/types";
 import { useAuth } from "./auth-provider";
 import { DelightChip } from "./delight-chip";
 import { DelightSelector } from "./delight-selector";
 import { ExpandableText } from "./expandable-text";
 import { ImagePicker } from "./image-picker";
+import { ImageModal } from "./image-modal";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -35,6 +37,7 @@ export function DayCard({ date, entries, onAdd, onUpdate, onDelete, onRefresh }:
   const [editWildcardName, setEditWildcardName] = useState("");
   const [editImageUrl, setEditImageUrl] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [expandedImage, setExpandedImage] = useState<string | null>(null);
 
   const dateStr = format(date, "yyyy-MM-dd");
   const today = isToday(date);
@@ -210,11 +213,23 @@ export function DayCard({ date, entries, onAdd, onUpdate, onDelete, onRefresh }:
                     )}
                   </div>
                   {entry.imageUrl && (
-                    <img
-                      src={entry.imageUrl}
-                      alt="Delight"
-                      className="w-full rounded-lg object-cover max-h-28"
-                    />
+                    <button
+                      onClick={() => setExpandedImage(entry.imageUrl!)}
+                      className="group relative w-full rounded-lg overflow-hidden transition-transform duration-200 ease hover:scale-[1.02] active:scale-[0.98]"
+                    >
+                      <Image
+                        src={entry.imageUrl}
+                        alt="Delight"
+                        width={400}
+                        height={112}
+                        className="w-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-black/0 opacity-0 transition-all duration-200 ease group-hover:bg-black/10 group-hover:opacity-100 flex items-center justify-center">
+                        <div className="rounded-full bg-white/90 p-1.5 opacity-0 transition-opacity duration-200 ease group-hover:opacity-100">
+                          <X size={12} className="rotate-45" />
+                        </div>
+                      </div>
+                    </button>
                   )}
                   {entry.description && (
                     <ExpandableText text={entry.description} maxLines={2} />
@@ -309,6 +324,14 @@ export function DayCard({ date, entries, onAdd, onUpdate, onDelete, onRefresh }:
           </AnimatePresence>
         </div>
       )}
+      
+      {/* Image Modal */}
+      <ImageModal
+        isOpen={!!expandedImage}
+        onClose={() => setExpandedImage(null)}
+        imageUrl={expandedImage || ""}
+        alt="Delight"
+      />
     </motion.div>
   );
 }
