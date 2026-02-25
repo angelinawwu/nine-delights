@@ -40,7 +40,7 @@ export async function getEntries(startDate: string, endDate: string): Promise<De
 
   const res = await sheets.spreadsheets.values.get({
     spreadsheetId: sheetId,
-    range: "Sheet1!A2:E",
+    range: "Sheet1!A2:F",
   });
 
   const rows = res.data.values || [];
@@ -53,6 +53,7 @@ export async function getEntries(startDate: string, endDate: string): Promise<De
       description: row[2] || "",
       wildcardName: row[3] || undefined,
       createdAt: row[4] || "",
+      imageUrl: row[5] || undefined,
     }))
     .filter((entry) => entry.date >= startDate && entry.date <= endDate);
 }
@@ -62,12 +63,13 @@ export async function addEntry(entry: {
   delight: DelightType;
   description: string;
   wildcardName?: string;
+  imageUrl?: string;
 }): Promise<void> {
   const { sheets, sheetId } = getAuth();
 
   await sheets.spreadsheets.values.append({
     spreadsheetId: sheetId,
-    range: "Sheet1!A:E",
+    range: "Sheet1!A:F",
     valueInputOption: "USER_ENTERED",
     requestBody: {
       values: [
@@ -77,6 +79,7 @@ export async function addEntry(entry: {
           entry.description,
           entry.wildcardName || "",
           new Date().toISOString(),
+          entry.imageUrl || "",
         ],
       ],
     },
@@ -90,13 +93,14 @@ export async function updateEntry(
     delight: DelightType;
     description: string;
     wildcardName?: string;
+    imageUrl?: string;
   }
 ): Promise<void> {
   const { sheets, sheetId } = getAuth();
 
   await sheets.spreadsheets.values.update({
     spreadsheetId: sheetId,
-    range: `Sheet1!A${rowIndex}:E${rowIndex}`,
+    range: `Sheet1!A${rowIndex}:F${rowIndex}`,
     valueInputOption: "USER_ENTERED",
     requestBody: {
       values: [
@@ -106,6 +110,7 @@ export async function updateEntry(
           entry.description,
           entry.wildcardName || "",
           new Date().toISOString(),
+          entry.imageUrl || "",
         ],
       ],
     },
@@ -146,7 +151,7 @@ export async function getAllEntries(): Promise<DelightEntry[]> {
 
   const res = await sheets.spreadsheets.values.get({
     spreadsheetId: sheetId,
-    range: "Sheet1!A2:E",
+    range: "Sheet1!A2:F",
   });
 
   const rows = res.data.values || [];
@@ -158,5 +163,6 @@ export async function getAllEntries(): Promise<DelightEntry[]> {
     description: row[2] || "",
     wildcardName: row[3] || undefined,
     createdAt: row[4] || "",
+    imageUrl: row[5] || undefined,
   }));
 }

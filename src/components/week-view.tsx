@@ -40,6 +40,7 @@ export function WeekView() {
     delight: DelightType;
     description: string;
     wildcardName?: string;
+    imageUrl?: string;
   }) => {
     return addDelight(entry);
   };

@@ -9,6 +9,7 @@ import { useAuth } from "./auth-provider";
 import { DelightChip } from "./delight-chip";
 import { DelightSelector } from "./delight-selector";
 import { ExpandableText } from "./expandable-text";
+import { ImagePicker } from "./image-picker";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -16,8 +17,8 @@ import { cn } from "@/lib/utils";
 interface DayCardProps {
   date: Date;
   entries: DelightEntry[];
-  onAdd: (entry: { date: string; delight: DelightType; description: string; wildcardName?: string }) => Promise<boolean>;
-  onUpdate: (entry: { rowIndex: number; date: string; delight: DelightType; description: string; wildcardName?: string }) => Promise<boolean>;
+  onAdd: (entry: { date: string; delight: DelightType; description: string; wildcardName?: string; imageUrl?: string }) => Promise<boolean>;
+  onUpdate: (entry: { rowIndex: number; date: string; delight: DelightType; description: string; wildcardName?: string; imageUrl?: string }) => Promise<boolean>;
   onDelete: (rowIndex: number) => Promise<boolean>;
   onRefresh: () => void;
 }
@@ -29,8 +30,10 @@ export function DayCard({ date, entries, onAdd, onUpdate, onDelete, onRefresh }:
   const [newDelight, setNewDelight] = useState<DelightType | null>(null);
   const [newDescription, setNewDescription] = useState("");
   const [newWildcardName, setNewWildcardName] = useState("");
+  const [newImageUrl, setNewImageUrl] = useState<string | null>(null);
   const [editDescription, setEditDescription] = useState("");
   const [editWildcardName, setEditWildcardName] = useState("");
+  const [editImageUrl, setEditImageUrl] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
   const dateStr = format(date, "yyyy-MM-dd");
@@ -50,6 +53,7 @@ export function DayCard({ date, entries, onAdd, onUpdate, onDelete, onRefresh }:
       delight: newDelight,
       description: newDescription,
       wildcardName: newDelight === "wildcard" ? newWildcardName : undefined,
+      imageUrl: newImageUrl || undefined,
     });
     setSubmitting(false);
     if (success) {
@@ -66,6 +70,7 @@ export function DayCard({ date, entries, onAdd, onUpdate, onDelete, onRefresh }:
       delight: entry.delight,
       description: editDescription,
       wildcardName: entry.delight === "wildcard" ? editWildcardName : undefined,
+      imageUrl: editImageUrl || undefined,
     });
     setSubmitting(false);
     if (success) {
@@ -86,12 +91,14 @@ export function DayCard({ date, entries, onAdd, onUpdate, onDelete, onRefresh }:
     setNewDelight(null);
     setNewDescription("");
     setNewWildcardName("");
+    setNewImageUrl(null);
   };
 
   const startEdit = (entry: DelightEntry) => {
     setEditingId(entry.rowIndex);
     setEditDescription(entry.description);
     setEditWildcardName(entry.wildcardName || "");
+    setEditImageUrl(entry.imageUrl || null);
   };
 
   return (
@@ -164,6 +171,7 @@ export function DayCard({ date, entries, onAdd, onUpdate, onDelete, onRefresh }:
                     className="min-h-[60px] resize-none text-xs"
                     autoFocus
                   />
+                  <ImagePicker imageUrl={editImageUrl} onImageChange={setEditImageUrl} />
                   <div className="flex gap-1.5">
                     <button
                       onClick={() => handleUpdate(entry)}
@@ -202,6 +210,13 @@ export function DayCard({ date, entries, onAdd, onUpdate, onDelete, onRefresh }:
                       </div>
                     )}
                   </div>
+                  {entry.imageUrl && (
+                    <img
+                      src={entry.imageUrl}
+                      alt="Delight"
+                      className="w-full rounded-lg object-cover max-h-28"
+                    />
+                  )}
                   {entry.description && (
                     <ExpandableText text={entry.description} maxLines={2} />
                   )}
@@ -262,6 +277,7 @@ export function DayCard({ date, entries, onAdd, onUpdate, onDelete, onRefresh }:
                       className="min-h-[60px] resize-none text-xs"
                       autoFocus
                     />
+                    <ImagePicker imageUrl={newImageUrl} onImageChange={setNewImageUrl} />
                     <div className="flex gap-1.5">
                       <button
                         onClick={handleAdd}

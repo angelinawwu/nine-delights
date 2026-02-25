@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const { date, delight, description, wildcardName } = body;
+    const { date, delight, description, wildcardName, imageUrl } = body;
 
     if (!date || !delight) {
       return NextResponse.json(
@@ -69,6 +69,7 @@ export async function POST(request: NextRequest) {
       delight: delight as DelightType,
       description: description || "",
       wildcardName,
+      imageUrl,
     });
 
     return NextResponse.json({ success: true });
@@ -88,7 +89,7 @@ export async function PUT(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const { rowIndex, date, delight, description, wildcardName } = body;
+    const { rowIndex, date, delight, description, wildcardName, imageUrl } = body;
 
     if (!rowIndex || !date || !delight) {
       return NextResponse.json(
@@ -102,6 +103,7 @@ export async function PUT(request: NextRequest) {
       delight: delight as DelightType,
       description: description || "",
       wildcardName,
+      imageUrl,
     });
 
     return NextResponse.json({ success: true });
