@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Lock, LockOpen, ChartBar, CalendarDots, SignOut } from "@phosphor-icons/react";
+import { Lock, LockOpen, ChartBar, CalendarDots, SignOut, Question } from "@phosphor-icons/react";
 import { useAuth } from "./auth-provider";
 import { PasswordPrompt } from "./password-prompt";
 import { cn } from "@/lib/utils";
@@ -19,7 +19,7 @@ export function Navbar() {
       <nav className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-md">
         <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6">
           <Link href="/" className="flex items-center gap-2">
-            <h1 className="text-xl tracking-tight">nine delights</h1>
+            <h1 className="text-xl tracking-tight">angelina&apos;s nine delights &lt;3</h1>
           </Link>
 
           <div className="flex items-center gap-1">
@@ -47,6 +47,19 @@ export function Navbar() {
             >
               <ChartBar size={18} weight={pathname === "/stats" ? "fill" : "regular"} />
               <span className="hidden sm:inline">Stats</span>
+            </Link>
+
+            <Link
+              href="/about"
+              className={cn(
+                "flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors duration-200 ease",
+                pathname === "/about"
+                  ? "bg-foreground/[0.06] text-foreground"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              <Question size={18} weight={pathname === "/about" ? "fill" : "regular"} />
+              <span className="hidden sm:inline">About</span>
             </Link>
 
             <div className="mx-1.5 h-4 w-px bg-border" />

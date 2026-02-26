@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { format, isToday, isFuture } from "date-fns";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Trash, PencilSimple, Check, X } from "@phosphor-icons/react";
+import { Plus, Trash, PencilSimple, Check, X, ArrowsOutSimple } from "@phosphor-icons/react";
 import Image from "next/image";
 import { DelightEntry, DelightType } from "@/lib/types";
 import { useAuth } from "./auth-provider";
@@ -226,7 +226,7 @@ export function DayCard({ date, entries, onAdd, onUpdate, onDelete, onRefresh }:
                       />
                       <div className="absolute inset-0 bg-black/0 opacity-0 transition-all duration-200 ease group-hover:bg-black/10 group-hover:opacity-100 flex items-center justify-center">
                         <div className="rounded-full bg-white/90 p-1.5 opacity-0 transition-opacity duration-200 ease group-hover:opacity-100">
-                          <X size={12} className="rotate-45" />
+                          <ArrowsOutSimple size={12} />
                         </div>
                       </div>
                     </button>

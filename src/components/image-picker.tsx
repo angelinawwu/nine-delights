@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { Camera, ImageSquare, X, SpinnerGap } from "@phosphor-icons/react";
+import { useState } from "react";
+import { ImageSquare, X } from "@phosphor-icons/react";
 import Image from "next/image";
 import { ImageModal } from "./image-modal";
 import { cn } from "@/lib/utils";
@@ -13,37 +13,14 @@ interface ImagePickerProps {
 }
 
 export function ImagePicker({ imageUrl, onImageChange, className }: ImagePickerProps) {
-  const [uploading, setUploading] = useState(false);
   const [expandedImage, setExpandedImage] = useState<string | null>(null);
-  const galleryRef = useRef<HTMLInputElement>(null);
-  const cameraRef = useRef<HTMLInputElement>(null);
+  const [inputUrl, setInputUrl] = useState("");
 
-  const handleUpload = async (file: File) => {
-    setUploading(true);
-    try {
-      const formData = new FormData();
-      formData.append("file", file);
-
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!res.ok) throw new Error("Upload failed");
-
-      const data = await res.json();
-      onImageChange(data.url);
-    } catch (error) {
-      console.error("Error uploading image:", error);
-    } finally {
-      setUploading(false);
+  const handleUrlSubmit = () => {
+    if (inputUrl.trim()) {
+      onImageChange(inputUrl.trim());
+      setInputUrl("");
     }
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) handleUpload(file);
-    e.target.value = "";
   };
 
   if (imageUrl) {
@@ -83,46 +60,21 @@ export function ImagePicker({ imageUrl, onImageChange, className }: ImagePickerP
   return (
     <div className={cn("flex gap-1.5", className)}>
       <input
-        ref={galleryRef}
-        type="file"
-        accept="image/*"
-        onChange={handleFileChange}
-        className="hidden"
+        type="url"
+        value={inputUrl}
+        onChange={(e) => setInputUrl(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && handleUrlSubmit()}
+        placeholder="Image URL..."
+        className="flex-1 rounded-md border border-border px-2 py-1 text-[11px] placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-foreground/20"
       />
-      <input
-        ref={cameraRef}
-        type="file"
-        accept="image/*"
-        capture="environment"
-        onChange={handleFileChange}
-        className="hidden"
-      />
-
       <button
         type="button"
-        disabled={uploading}
-        onClick={() => galleryRef.current?.click()}
-        className="flex items-center gap-1 rounded-md border border-dashed border-border px-2 py-1 text-[11px] text-muted-foreground transition-colors duration-200 ease hover:border-foreground/20 hover:text-foreground disabled:opacity-40"
+        onClick={handleUrlSubmit}
+        disabled={!inputUrl.trim()}
+        className="flex items-center gap-1 rounded-md border border-border px-2 py-1 text-[11px] text-muted-foreground transition-colors duration-200 ease hover:border-foreground/20 hover:text-foreground disabled:opacity-40"
       >
-        {uploading ? (
-          <SpinnerGap size={12} className="animate-spin" />
-        ) : (
-          <ImageSquare size={12} />
-        )}
-        Gallery
-      </button>
-      <button
-        type="button"
-        disabled={uploading}
-        onClick={() => cameraRef.current?.click()}
-        className="flex items-center gap-1 rounded-md border border-dashed border-border px-2 py-1 text-[11px] text-muted-foreground transition-colors duration-200 ease hover:border-foreground/20 hover:text-foreground disabled:opacity-40"
-      >
-        {uploading ? (
-          <SpinnerGap size={12} className="animate-spin" />
-        ) : (
-          <Camera size={12} />
-        )}
-        Camera
+        <ImageSquare size={12} />
+        Add
       </button>
     </div>
   );
