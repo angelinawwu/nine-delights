@@ -168,17 +168,8 @@ export default function StatsPage() {
     <div className="flex min-h-screen flex-col">
       <Navbar />
       <main className="mx-auto w-full max-w-5xl px-4 py-6 sm:px-6">
-        <div className="mb-6 flex items-end justify-between">
-          <div>
-            <h1 className="text-3xl tracking-tight" style={{ fontFamily: "var(--font-display)" }}>
-              Stats
-            </h1>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Your delight practice at a glance
-            </p>
-          </div>
-
-          <div className="flex items-center rounded-lg border border-border bg-card p-0.5">
+        <div className="mb-6 w-full flex items-end justify-between">
+          <div className="ml-auto flex items-center rounded-lg border border-border bg-card p-0.5">
             {ranges.map((r) => (
               <button
                 key={r.value}
