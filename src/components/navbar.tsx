@@ -19,7 +19,7 @@ export function Navbar() {
       <nav className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-md">
         <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6">
           <Link href="/" className="flex items-center gap-2">
-            <h1 className="text-xl tracking-tight">my nine delights</h1>
+            <h1 className="text-xl tracking-tight">9 delights</h1>
           </Link>
 
           <div className="flex items-center gap-1">
