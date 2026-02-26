@@ -63,6 +63,10 @@
     --font-display: 'Instrument Serif', serif;
     --font-body: 'General Sans', -apple-system, sans-serif;
   }
+
+  html {
+    scrollbar-gutter: stable;
+  }
 }
 
 body {

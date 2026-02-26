@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 const DELIGHT_DESCRIPTIONS: Record<string, string> = {
   "walking around": "self explanatory",
-  fellowship: "spending time with people i love <3",
+  fellowship: "human connection, socializing, and solidarity",
   deliciousness: "good food/drink",
   transcendence:
     "feeling that i have reached a different level of some sort",
