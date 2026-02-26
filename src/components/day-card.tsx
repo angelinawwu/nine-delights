@@ -217,13 +217,14 @@ export function DayCard({ date, entries, onAdd, onUpdate, onDelete, onRefresh }:
                       onClick={() => setExpandedImage(entry.imageUrl!)}
                       className="group relative w-full rounded-lg overflow-hidden transition-transform duration-200 ease hover:scale-[1.02] active:scale-[0.98]"
                     >
-                      <Image
-                        src={entry.imageUrl}
-                        alt="Delight"
-                        width={400}
-                        height={112}
-                        className="w-full object-cover"
-                      />
+                      <div className="relative w-full aspect-[16/9]">
+                        <Image
+                          src={entry.imageUrl}
+                          alt="Delight"
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
                       <div className="absolute inset-0 bg-black/0 opacity-0 transition-all duration-200 ease group-hover:bg-black/10 group-hover:opacity-100 flex items-center justify-center">
                         <div className="rounded-full bg-white/90 p-1.5 opacity-0 transition-opacity duration-200 ease group-hover:opacity-100">
                           <ArrowsOutSimple size={12} />
