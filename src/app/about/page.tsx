@@ -34,7 +34,7 @@ export default function AboutPage() {
           >
             what is this?
           </h1>
-
+          <div className="space-y-3">
           <p className="text-sm leading-relaxed text-muted-foreground">
             the &quot;nine delights&quot; is a concept created by{" "}
             <a
@@ -45,9 +45,17 @@ export default function AboutPage() {
             >
               @i_zzzzzz on twitter
             </a>
-            . my goal is to achieve at least 3/9 delights on any given day.
+            . 
+          </p>
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            i&apos;m on a mission to fill my days with more of what i love! this website
+            is a tool to document my progress and stay mindful of the 
+            little things that make life delightful :)
+          </p>
+          <p className="text-sm leading-relaxed text-muted-foreground">
             below are the delights:
           </p>
+          </div>
 
           <ul className="space-y-3">
             {DELIGHTS.map((d, i) => {
