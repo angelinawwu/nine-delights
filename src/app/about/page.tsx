@@ -5,11 +5,10 @@ import { DELIGHTS, getDelightConfig } from "@/lib/constants";
 import { motion } from "framer-motion";
 
 const DELIGHT_DESCRIPTIONS: Record<string, string> = {
-  "walking around": "self explanatory",
-  fellowship: "human connection, socializing, and solidarity",
+  frolicking: "exploring, wandering, and touching grass",
+  fellowship: "moments of connection or camaraderie",
   deliciousness: "good food/drink",
-  transcendence:
-    "feeling that i have reached a different level of some sort",
+  transcendence: "feeling that i have reached a different level of some sort",
   goofing: "having a good laugh",
   amelioration: "self-improvement, helping others",
   decadence: "pleasure, luxury, or leisure",

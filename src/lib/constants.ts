@@ -1,7 +1,7 @@
 import { DelightType } from "./types";
 
 export const DELIGHTS: { type: DelightType; label: string; cssVar: string; color: string }[] = [
-  { type: "walking around", label: "Walking Around", cssVar: "--delight-walking", color: "#7EC8A0" },
+  { type: "frolicking", label: "Frolicking", cssVar: "--delight-frolicking", color: "#7EC8A0" },
   { type: "fellowship", label: "Fellowship", cssVar: "--delight-fellowship", color: "#F4A261" },
   { type: "deliciousness", label: "Deliciousness", cssVar: "--delight-deliciousness", color: "#E76F51" },
   { type: "transcendence", label: "Transcendence", cssVar: "--delight-transcendence", color: "#A78BFA" },

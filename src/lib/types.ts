@@ -1,5 +1,5 @@
 export type DelightType =
-  | "walking around"
+  | "frolicking"
   | "fellowship"
   | "deliciousness"
   | "transcendence"
