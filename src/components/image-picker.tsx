@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import { Camera, ImageSquare, X, SpinnerGap } from "@phosphor-icons/react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 interface ImagePickerProps {
@@ -46,9 +47,12 @@ export function ImagePicker({ imageUrl, onImageChange, className }: ImagePickerP
   if (imageUrl) {
     return (
       <div className={cn("relative group/img", className)}>
-        <img
+        <Image
           src={imageUrl}
           alt="Delight"
+          width={0}
+          height={0}
+          sizes="100vw"
           className="h-20 w-full rounded-lg object-cover"
         />
         <button
