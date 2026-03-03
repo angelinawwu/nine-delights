@@ -13,7 +13,6 @@ import { ExpandableText } from "./expandable-text";
 import { ImagePicker } from "./image-picker";
 import { ImageModal } from "./image-modal";
 import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
 interface DayCardProps {
@@ -158,14 +157,6 @@ export function DayCard({ date, entries, onAdd, onUpdate, onDelete, onRefresh }:
               {editingId === entry.rowIndex ? (
                 <div className="space-y-2 rounded-xl border border-border bg-secondary/40 p-2.5">
                   <DelightChip delight={entry.delight} wildcardName={entry.wildcardName} size="sm" />
-                  {entry.delight === "wildcard" && (
-                    <Input
-                      value={editWildcardName}
-                      onChange={(e) => setEditWildcardName(e.target.value)}
-                      placeholder="Wildcard name..."
-                      className="h-7 text-xs"
-                    />
-                  )}
                   <Textarea
                     value={editDescription}
                     onChange={(e) => setEditDescription(e.target.value)}
@@ -276,14 +267,6 @@ export function DayCard({ date, entries, onAdd, onUpdate, onDelete, onRefresh }:
                         <X size={12} />
                       </button>
                     </div>
-                    {newDelight === "wildcard" && (
-                      <Input
-                        value={newWildcardName}
-                        onChange={(e) => setNewWildcardName(e.target.value)}
-                        placeholder="Wildcard name..."
-                        className="h-7 text-xs"
-                      />
-                    )}
                     <Textarea
                       value={newDescription}
                       onChange={(e) => setNewDescription(e.target.value)}
