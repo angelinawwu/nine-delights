@@ -16,9 +16,6 @@ export function getDelightConfig(type: DelightType) {
   return DELIGHTS.find((d) => d.type === type)!;
 }
 
-export function getDelightDisplayName(entry: { delight: DelightType; wildcardName?: string }) {
-  if (entry.delight === "wildcard") {
-    return "Wildcard";
-  }
+export function getDelightDisplayName(entry: { delight: DelightType }) {
   return getDelightConfig(entry.delight).label;
 }

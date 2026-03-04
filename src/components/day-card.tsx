@@ -18,8 +18,8 @@ import { cn } from "@/lib/utils";
 interface DayCardProps {
   date: Date;
   entries: DelightEntry[];
-  onAdd: (entry: { date: string; delight: DelightType; description: string; wildcardName?: string; imageUrl?: string }) => Promise<boolean>;
-  onUpdate: (entry: { rowIndex: number; date: string; delight: DelightType; description: string; wildcardName?: string; imageUrl?: string }) => Promise<boolean>;
+  onAdd: (entry: { date: string; delight: DelightType; description: string; imageUrl?: string }) => Promise<boolean>;
+  onUpdate: (entry: { rowIndex: number; date: string; delight: DelightType; description: string; imageUrl?: string }) => Promise<boolean>;
   onDelete: (rowIndex: number) => Promise<boolean>;
   onRefresh: () => void;
 }
@@ -30,10 +30,8 @@ export function DayCard({ date, entries, onAdd, onUpdate, onDelete, onRefresh }:
   const [editingId, setEditingId] = useState<number | null>(null);
   const [newDelight, setNewDelight] = useState<DelightType | null>(null);
   const [newDescription, setNewDescription] = useState("");
-  const [newWildcardName, setNewWildcardName] = useState("");
   const [newImageUrl, setNewImageUrl] = useState<string | null>(null);
   const [editDescription, setEditDescription] = useState("");
-  const [editWildcardName, setEditWildcardName] = useState("");
   const [editImageUrl, setEditImageUrl] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [expandedImage, setExpandedImage] = useState<string | null>(null);
@@ -53,7 +51,6 @@ export function DayCard({ date, entries, onAdd, onUpdate, onDelete, onRefresh }:
       date: dateStr,
       delight: newDelight,
       description: newDescription,
-      wildcardName: newDelight === "wildcard" ? newWildcardName : undefined,
       imageUrl: newImageUrl || undefined,
     });
     setSubmitting(false);
@@ -70,7 +67,6 @@ export function DayCard({ date, entries, onAdd, onUpdate, onDelete, onRefresh }:
       date: entry.date,
       delight: entry.delight,
       description: editDescription,
-      wildcardName: entry.delight === "wildcard" ? editWildcardName : undefined,
       imageUrl: editImageUrl || undefined,
     });
     setSubmitting(false);
@@ -91,14 +87,12 @@ export function DayCard({ date, entries, onAdd, onUpdate, onDelete, onRefresh }:
     setAdding(false);
     setNewDelight(null);
     setNewDescription("");
-    setNewWildcardName("");
     setNewImageUrl(null);
   };
 
   const startEdit = (entry: DelightEntry) => {
     setEditingId(entry.rowIndex);
     setEditDescription(entry.description);
-    setEditWildcardName(entry.wildcardName || "");
     setEditImageUrl(entry.imageUrl || null);
   };
 
@@ -156,7 +150,7 @@ export function DayCard({ date, entries, onAdd, onUpdate, onDelete, onRefresh }:
             >
               {editingId === entry.rowIndex ? (
                 <div className="space-y-2 rounded-xl border border-border bg-secondary/40 p-2.5">
-                  <DelightChip delight={entry.delight} wildcardName={entry.wildcardName} size="sm" />
+                  <DelightChip delight={entry.delight} size="sm" />
                   <Textarea
                     value={editDescription}
                     onChange={(e) => setEditDescription(e.target.value)}
@@ -184,7 +178,7 @@ export function DayCard({ date, entries, onAdd, onUpdate, onDelete, onRefresh }:
               ) : (
                 <div className="space-y-1">
                   <div className="flex items-start justify-between gap-1">
-                    <DelightChip delight={entry.delight} wildcardName={entry.wildcardName} size="sm" />
+                    <DelightChip delight={entry.delight} size="sm" />
                     {isAuthenticated && (
                       <div className="flex shrink-0 items-center gap-0.5 opacity-0 transition-opacity duration-200 ease group-hover:opacity-100">
                         <button
@@ -278,7 +272,7 @@ export function DayCard({ date, entries, onAdd, onUpdate, onDelete, onRefresh }:
                     <div className="flex gap-1.5">
                       <button
                         onClick={handleAdd}
-                        disabled={submitting || (newDelight === "wildcard" && !newWildcardName)}
+                        disabled={submitting}
                         className="flex items-center gap-1 rounded-md bg-foreground px-2.5 py-1 text-[11px] font-medium text-primary-foreground transition-opacity duration-200 ease hover:opacity-80 disabled:opacity-40"
                       >
                         <Check size={12} /> Add

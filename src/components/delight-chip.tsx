@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils";
 
 interface DelightChipProps {
   delight: DelightType;
-  wildcardName?: string;
   size?: "sm" | "md";
   className?: string;
   onRemove?: () => void;
@@ -14,13 +13,12 @@ interface DelightChipProps {
 
 export function DelightChip({
   delight,
-  wildcardName,
   size = "sm",
   className,
   onRemove,
 }: DelightChipProps) {
   const config = getDelightConfig(delight);
-  const displayName = getDelightDisplayName({ delight, wildcardName });
+  const displayName = getDelightDisplayName({ delight });
 
   return (
     <span

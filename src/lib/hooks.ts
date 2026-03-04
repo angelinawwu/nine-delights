@@ -23,7 +23,7 @@ export function useDelights() {
   }, []);
 
   const addDelight = useCallback(
-    async (entry: { date: string; delight: string; description: string; wildcardName?: string; imageUrl?: string }) => {
+    async (entry: { date: string; delight: string; description: string; imageUrl?: string }) => {
       try {
         const res = await fetch("/api/delights", {
           method: "POST",
@@ -46,7 +46,6 @@ export function useDelights() {
       date: string;
       delight: string;
       description: string;
-      wildcardName?: string;
       imageUrl?: string;
     }) => {
       try {

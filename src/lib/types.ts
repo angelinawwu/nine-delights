@@ -14,7 +14,6 @@ export interface DelightEntry {
   date: string;
   delight: DelightType;
   description: string;
-  wildcardName?: string;
   imageUrl?: string;
   createdAt: string;
 }

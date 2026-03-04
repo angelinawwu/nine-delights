@@ -51,7 +51,6 @@ export async function getEntries(startDate: string, endDate: string): Promise<De
       date: row[0] || "",
       delight: (row[1] || "") as DelightType,
       description: row[2] || "",
-      wildcardName: row[3] || undefined,
       createdAt: row[4] || "",
       imageUrl: row[5] || undefined,
     }))
@@ -62,7 +61,6 @@ export async function addEntry(entry: {
   date: string;
   delight: DelightType;
   description: string;
-  wildcardName?: string;
   imageUrl?: string;
 }): Promise<void> {
   const { sheets, sheetId } = getAuth();
@@ -77,7 +75,7 @@ export async function addEntry(entry: {
           entry.date,
           entry.delight,
           entry.description,
-          entry.wildcardName || "",
+          "",
           new Date().toISOString(),
           entry.imageUrl || "",
         ],
@@ -92,7 +90,6 @@ export async function updateEntry(
     date: string;
     delight: DelightType;
     description: string;
-    wildcardName?: string;
     imageUrl?: string;
   }
 ): Promise<void> {
@@ -108,7 +105,7 @@ export async function updateEntry(
           entry.date,
           entry.delight,
           entry.description,
-          entry.wildcardName || "",
+          "",
           new Date().toISOString(),
           entry.imageUrl || "",
         ],
@@ -161,7 +158,6 @@ export async function getAllEntries(): Promise<DelightEntry[]> {
     date: row[0] || "",
     delight: (row[1] || "") as DelightType,
     description: row[2] || "",
-    wildcardName: row[3] || undefined,
     createdAt: row[4] || "",
     imageUrl: row[5] || undefined,
   }));
