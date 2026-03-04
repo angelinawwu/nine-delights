@@ -40,7 +40,7 @@ export async function getEntries(startDate: string, endDate: string): Promise<De
 
   const res = await sheets.spreadsheets.values.get({
     spreadsheetId: sheetId,
-    range: "Sheet1!A2:F",
+    range: "Sheet1!A2:E",
   });
 
   const rows = res.data.values || [];
@@ -51,8 +51,8 @@ export async function getEntries(startDate: string, endDate: string): Promise<De
       date: row[0] || "",
       delight: (row[1] || "") as DelightType,
       description: row[2] || "",
-      createdAt: row[4] || "",
-      imageUrl: row[5] || undefined,
+      createdAt: row[3] || "",
+      imageUrl: row[4] || undefined,
     }))
     .filter((entry) => entry.date >= startDate && entry.date <= endDate);
 }
@@ -67,7 +67,7 @@ export async function addEntry(entry: {
 
   await sheets.spreadsheets.values.append({
     spreadsheetId: sheetId,
-    range: "Sheet1!A:F",
+    range: "Sheet1!A:E",
     valueInputOption: "USER_ENTERED",
     requestBody: {
       values: [
@@ -75,7 +75,6 @@ export async function addEntry(entry: {
           entry.date,
           entry.delight,
           entry.description,
-          "",
           new Date().toISOString(),
           entry.imageUrl || "",
         ],
@@ -97,7 +96,7 @@ export async function updateEntry(
 
   await sheets.spreadsheets.values.update({
     spreadsheetId: sheetId,
-    range: `Sheet1!A${rowIndex}:F${rowIndex}`,
+    range: `Sheet1!A${rowIndex}:E${rowIndex}`,
     valueInputOption: "USER_ENTERED",
     requestBody: {
       values: [
@@ -105,7 +104,6 @@ export async function updateEntry(
           entry.date,
           entry.delight,
           entry.description,
-          "",
           new Date().toISOString(),
           entry.imageUrl || "",
         ],
@@ -148,7 +146,7 @@ export async function getAllEntries(): Promise<DelightEntry[]> {
 
   const res = await sheets.spreadsheets.values.get({
     spreadsheetId: sheetId,
-    range: "Sheet1!A2:F",
+    range: "Sheet1!A2:E",
   });
 
   const rows = res.data.values || [];
@@ -158,7 +156,7 @@ export async function getAllEntries(): Promise<DelightEntry[]> {
     date: row[0] || "",
     delight: (row[1] || "") as DelightType,
     description: row[2] || "",
-    createdAt: row[4] || "",
-    imageUrl: row[5] || undefined,
+    createdAt: row[3] || "",
+    imageUrl: row[4] || undefined,
   }));
 }
