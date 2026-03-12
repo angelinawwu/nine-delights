@@ -10,7 +10,7 @@ const DELIGHT_DESCRIPTIONS: Record<string, string> = {
   deliciousness: "good food/drink",
   transcendence: "feeling that i have reached a different level of some sort",
   goofing: "having a good laugh",
-  amelioration: "self-improvement, helping others",
+  creation: "making things",
   decadence: "pleasure, luxury, or leisure",
   enthrallment: "becoming incredibly engaged with or focused on something",
   wildcard: "something delightful that doesn't fit in the above categories",

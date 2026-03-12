@@ -1,6 +1,6 @@
 # Nine Delights
 
-Track your daily implementation of the nine delights: **Frolicking**, **Fellowship**, **Deliciousness**, **Transcendence**, **Goofing**, **Amelioration**, **Decadence**, **Enthrallment**, and **Wildcard**.
+Track your daily implementation of the nine delights: **Frolicking**, **Fellowship**, **Deliciousness**, **Transcendence**, **Goofing**, **Creation**, **Decadence**, **Enthrallment**, and **Wildcard**.
 
 Inspired by [@i_zzzzzz on Twitter](https://twitter.com/i_zzzzzz).
 
